@@ -1,0 +1,88 @@
+version: 2
+
+sources:
+  - name: austin_bikeshare
+    database: hankanalytics
+    schema: hanka
+    quoting:
+      database: true
+      schema: true
+      identifier: true
+    tables:
+      - name: trips
+        identifier: austin_bikeshare_trips
+
+models:
+  - name: austin_summary
+    description: "Summary stats for Austin Bikeshare"
+    columns:
+      - name: day_of_week
+        description: "Which day the ride started on"
+        tests:
+          - unique
+          - not_null
+      - name: number_of_rides
+        description: "Total rides on that day over all history"
+        tests:
+          - not_null
+      - name: avg_duration
+        description: "Average duration of rides in minutes"
+        tests:
+          - not_null
+  - name: austin_rides
+    description: "Each ride with a little more info"
+    columns:
+      - name: trip_id
+        description: "Unique trip identifier"
+        tests:
+          - unique
+          - not_null
+      - name: subscriber_type
+        description: "How paid for"
+      - name: bikeid
+      - name: start_time
+      - name: start_station_name
+      - name: end_station_name
+      - name: duration_minutes
+      - name: day_of_week
+        description: "Which week day Monday, Tuesday and so on"
+        tests:
+          - not_null
+
+
+metrics:
+  - name: ride_count
+    label: Austin Rides Count
+    model: ref('austin_rides')
+    description: "The number of bicycle rides"
+
+    type: count
+    sql: "*" # superfluous here because its a count, but shown as an example
+
+    timestamp: start_time
+    time_grains: [day, week, month]
+
+    dimensions:
+      - subscriber_type
+      - start_station_name
+      - end_station_name
+
+    meta: {team: Hank}
+
+  - name: ride_duration
+    label: Austin Rides Duration
+    model: ref('austin_rides')
+    description: "The average duration of bicycle rides"
+
+    type: average
+    sql: duration_minute
+
+    timestamp: start_time
+    time_grains: [ day, week, month ]
+
+    dimensions:
+      - subscriber_type
+      - start_station_name
+      - end_station_name
+
+    meta: { team: Hank }
