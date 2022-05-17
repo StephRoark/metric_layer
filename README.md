@@ -1,26 +1,26 @@
 # Welcome to my first dbt project!
 
-Super rough 'How I got here' outline.
+Super rough outline for 'How to get started with dbt metrics and BigQuery'.
 
 ### Before starting
 1. Extract and Load some data into BigQuery
-   1. (Maybe needed) Setup billing in Google Cloud (could use local Postgres instead) and attach it to the Google Cloud project you are going to use.  This is because some of the DML commands I used required billing to be setup. I setup a billing budget also, to try and avoid a surprise (again could setup local Postgres to avoid a surprise bill).
-   2. (Optional) I setup a new project in GCloud: `hankanalytics`
-   3. Create a new dataset in BigQuery. In my case made a US Region dataset and called it `hanka` (for Hank Analytics)
+   1. (Optional) Setup billing in Google Cloud (could use local Postgres instead) and attach it to the Google Cloud project you are going to use.  This is because some of the DML commands I used required billing to be setup. I setup a billing budget also, to try and avoid a surprise (again could setup local Postgres to avoid a surprise bill).
+   2. (Optional) I setup a new project in GCloud: `metricslayer`
+   3. Create a new dataset in BigQuery. In my case made a US Region dataset and called it `austin_bikes_metrics`
    4. Create a new table in BigQuery. This is where the extracted data will go.  My table schema was the same schema as `bigquery-public-data.austin_bikeshare.bikeshare_trips` as that is where I "extracted" "raw" data from.
-   5. Extract the data.  I got only a sample of the data, because I wanted things later to run fast.  `INSERT INTO 'hankanalytics.hanka.austin_bikeshare_trips'
+   5. Extract the data.  I got only a sample of the data, because I wanted things later to run fast.  `INSERT INTO `metricslayer.austin_bikes_metrics.bikeshare_rides`
       SELECT * FROM 'bigquery-public-data.austin_bikeshare.bikeshare_trips'
       WHERE rand() < 0.01`.  Of course change the table you insert INTO to your gcloud project, dataset, and desired table name.
 2. Setup dbt for local development 
-   1. Install dbt for target db.  Directions here (except setup for BigQuery, not Postgres): `https://blog.jetbrains.com/big-data-tools/2022/01/25/how-i-started-out-with-dbt/` 
-   2. Create service account in gcloud.  Directions here: `https://medium.com/@ivan_toriya/step-by-step-guide-to-run-dbt-in-production-with-google-cloud-platform-fb1f035f3c7b`
+   1. Install dbt for target db.  Directions here (except setup for BigQuery, not Postgres): `https://blog.jetbrains.com/big-data-tools/2022/01/25/how-i-started-out-with-dbt/` for 'BQ:https://docs.getdbt.com/docs/available-adapters'
+   2. Create service account in gcloud.  Directions here: 'https://medium.com/@ivan_toriya/step-by-step-guide-to-run-dbt-in-production-with-google-cloud-platform-fb1f035f3c7b'
    3. Create a JSON key for the service account and download it.  Do not place this key anywhere public.
    4. Setup dbt profile.  Run `dbt init` to do this.  Use service account and the JSON key you just downloaded
 3. Configure and run dbt.
    1. Clone or fork this project.
-   2. Change everywhere `hankanalytics` to your project name.
-   3. Change everywhere `hanka` to your dataset name.
-   4. If you picked a table other than `austin_bikeshare_trips` change that in the source model.
+   2. Change everywhere `metricslayer` to your project name.
+   3. Change everywhere `austin_bikes_metrics` to your dataset name.
+   4. If you picked a table other than `bikeshare_rides` change that in the source model.
    5. Change in the `dbt_project.yml` file `profile:` parameter to match the profile from step 2 above.
 
 

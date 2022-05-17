@@ -2,15 +2,15 @@ version: 2
 
 sources:
   - name: austin_bikeshare
-    database: hankanalytics
-    schema: hanka
+    database: metricslayer
+    schema: austin_bikes_metrics
     quoting:
       database: true
       schema: true
       identifier: true
     tables:
       - name: trips
-        identifier: austin_bikeshare_trips
+        identifier: bikeshare_rides
 
 models:
   - name: austin_summary
@@ -57,7 +57,7 @@ metrics:
     description: "The number of bicycle rides"
 
     type: count
-    sql: "*" # superfluous here because its a count, but shown as an example
+    sql: "*"
 
     timestamp: start_time
     time_grains: [day, week, month]
@@ -67,7 +67,7 @@ metrics:
       - start_station_name
       - end_station_name
 
-    meta: {team: Hank}
+    meta: {team: EPA}
 
   - name: ride_duration
     label: Austin Rides Duration
@@ -85,4 +85,4 @@ metrics:
       - start_station_name
       - end_station_name
 
-    meta: { team: Hank }
+    meta: { team: EPA }
