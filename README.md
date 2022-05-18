@@ -13,8 +13,8 @@ Super rough outline for 'How to get started with dbt metrics and BigQuery'.
       WHERE rand() < 0.01`.  Of course change the table you insert INTO to your gcloud project, dataset, and desired table name.
 2. Setup dbt for local development 
    1. Install dbt for target db.  Directions here (except setup for BigQuery, not Postgres): `https://blog.jetbrains.com/big-data-tools/2022/01/25/how-i-started-out-with-dbt/` for 'BQ:https://docs.getdbt.com/docs/available-adapters'
-   2. Create service account in gcloud.  Directions here: 'https://medium.com/@ivan_toriya/step-by-step-guide-to-run-dbt-in-production-with-google-cloud-platform-fb1f035f3c7b'
-   3. Create a JSON key for the service account and download it.  Do not place this key anywhere public.
+   2. Create service account in gcloud (or reuse service account if one already created.)  Directions here: 'https://medium.com/@ivan_toriya/step-by-step-guide-to-run-dbt-in-production-with-google-cloud-platform-fb1f035f3c7b'
+   3. Create or add a JSON key for the service account and download it.  Do not place this key anywhere public.
    4. Setup dbt profile.  Run `dbt init` to do this.  Use service account and the JSON key you just downloaded
 3. Configure and run dbt.
    1. Clone or fork this project.

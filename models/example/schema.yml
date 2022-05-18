@@ -49,7 +49,6 @@ models:
         tests:
           - not_null
 
-
 metrics:
   - name: ride_count
     label: Austin Rides Count
